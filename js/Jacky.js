@@ -24,19 +24,21 @@ var Jacky = {
 function isAReversedSuite(number) {
     return isASuite(number, true)
 }
-        
+
 function isASuite(number, reverse) {
     var asArray = number.toString().split('');
     if (reverse) {
         asArray = asArray.reverse()
     }
-    for(var i = 0; i < asArray.length -1; i++) {
-        if( parseInt(asArray[i]) !=  parseInt(asArray[i +1]) - 1) {
-            return false
-        }
-    }
-   
-    return true
+    var result = asArray.map(
+      function(item){
+        return parseInt(item)
+    }).reduce(
+      function(acc, value) {
+        if(!acc) return false;
+        return (acc + 1 == value) ? value : false
+      })
+    return !!result
 }
 
 function isSingleNumberFllowedBy0s(number) {
